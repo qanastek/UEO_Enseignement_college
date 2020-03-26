@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Travaux Pratiques</title>
+	
+	<script
+	src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
+
+</head>
+<body onload="startGame()">
+
+	<p>
+		Superficie : <span class="size">0</span>m²
+	</p>
+
+	<button class="getArea">Calcule superficie</button>
+	
+	<br>
+
+	<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
+	<p>Use the ACCELERATE button to stay in the air</p>
+	<p>How long can you stay alive?</p>
+
+</body>
+<footer>
+
+	<!-- Main javascript file -->
+	<script type="text/javascript" src="main.js"></script>
+
+	<!-- Libraries -->
+	<script type="text/javascript" src="library.js"></script>
+	<script type="text/javascript" src="game.js"></script>
+
+</footer>
+</html>
