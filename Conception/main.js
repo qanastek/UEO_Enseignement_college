@@ -1,9 +1,14 @@
-$(".getArea").click(function (e) { 
+// Players keys
+const P1_KEY = "z".charCodeAt(0);
+const P2_KEY = "8".charCodeAt(0);
 
-    console.log("Clicked !")
+$(document).keypress(function(e){
 
-    var rectancle = new Rectangle(5,5);
-    var area = rectancle.getArea();
-
-    $(".size").text(area);
+    if (e.which == P1_KEY) {
+        move(myGamePieceP1);
+    } else {
+        move(myGamePieceP2);
+    }
 });
+
+// fill: yellow;

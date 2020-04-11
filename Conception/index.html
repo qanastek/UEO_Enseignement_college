@@ -11,17 +11,22 @@
 </head>
 <body onload="startGame()">
 
-	<p>
-		Superficie : <span class="size">0</span>m²
-	</p>
+	<div style="display: grid;">
 
-	<button class="getArea">Calcule superficie</button>
-	
-	<br>
+		<div style="grid-column: 1 / 10; grid-row: 1;">
+			
+			<h1>Player 1</h1>
+			<button onclick="move(myGamePieceP1)">MOVE</button>
 
-	<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-	<p>Use the ACCELERATE button to stay in the air</p>
-	<p>How long can you stay alive?</p>
+		</div>
+
+		<div style="grid-column: 2 / 10; grid-row: 1;">
+
+			<h1>Player 2</h1>
+			<button onclick="move(myGamePieceP2)">MOVE</button>
+
+		</div>
+	</div>
 
 </body>
 <footer>
@@ -30,7 +35,6 @@
 	<script type="text/javascript" src="main.js"></script>
 
 	<!-- Libraries -->
-	<script type="text/javascript" src="library.js"></script>
 	<script type="text/javascript" src="game.js"></script>
 
 </footer>
