@@ -8,10 +8,15 @@
 
 // Settings
 const FRESHRATE = 10;
-const WIDTH = 600;
-const HEIGHT = 400;
+const WIDTH = screen.width;
+const HEIGHT = screen.height*0.335;
 const STEPS = 10;
 const MOVE_DISTANCE = WIDTH / STEPS;
+const ROAD_HEIGHT = HEIGHT*0.75;
+const MIDDLE_ROAD = HEIGHT*0.625;
+const NBR_MIDDLE_BAND = 6;
+const WIDHT_MIDDLE_BAND = WIDTH / NBR_MIDDLE_BAND; // Center band
+const FINISH_STRING = "FINISH";
 
 // Player 1
 var myGamePieceP1;
@@ -28,19 +33,43 @@ const SIZE_CAR = 250;
 var carP1 = new Image();
 carP1.src = "assets/images/car.svg";
 
+// Map
+var MAP = []
+
 /**
  * The constructor of the game
  */
 function startGame() {
 
-    // Player 1
-    myGamePieceP1 = new component(30, 30, "yellow", 0, 60); // Player 1 piece
-    scoreP1 = new component("30px", "Consolas", "black", 0, 40, "text"); // Score
-    // Player 2
-    myGamePieceP2 = new component(30, 30, "pink", 0, 180); // Player 2 piece
-    scoreP2 = new component("30px", "Consolas", "black", 370, 40, "text"); // Score
+    // Road
+    MAP.push(new component(WIDTH, ROAD_HEIGHT, "black", 0, HEIGHT*0.25,"road"));
 
-    myGameArea.start(); // Game
+    // Center of the road
+    for (let i = 0; i < NBR_MIDDLE_BAND; i++) {
+        MAP.push(new component(
+            WIDHT_MIDDLE_BAND*0.5,
+            HEIGHT*0.05,
+            "white",
+            i*WIDHT_MIDDLE_BAND,
+            MIDDLE_ROAD,
+            "road"
+        ));   
+    }
+
+    // Finish line
+    MAP.push(new component(WIDTH*0.025, HEIGHT, "white", WIDTH*0.975, HEIGHT*0.25,"road")); // Strape
+    MAP.push(new component("30px", "Consolas", "black", WIDTH*0.982, HEIGHT*0.3, "text finish line")); // Text
+
+    // Player 1
+    myGamePieceP1 = new component(SIZE_CAR, SIZE_CAR, "yellow", 0, HEIGHT*-0.02,"car"); // Player 1 piece
+    scoreP1 = new component("30px", "Consolas", "black", WIDTH*0.015, HEIGHT*0.15, "text"); // Score
+
+    // Player 2
+    myGamePieceP2 = new component(SIZE_CAR, SIZE_CAR, "pink", 0, HEIGHT*0.35,"car"); // Player 2 piece
+    scoreP2 = new component("30px", "Consolas", "black", WIDTH*0.175, HEIGHT*0.15, "text"); // Score
+
+    // Start the game
+    myGameArea.start();
 }
 
 var myGameArea = {
@@ -101,15 +130,33 @@ function component(width, height, color, x, y, type) {
 
         // If the component is a piece of text
         if (this.type == "text") {
-            ctx.font = this.width + " " + this.height; // Set the font size
-            ctx.fillStyle = color; // Set the color size
-            ctx.fillText(this.text, this.x, this.y); // Draw the text
-        } else {
-            ctx.fillStyle = color; // Set the color of the component
-            // ctx.fillRect(this.x, this.y, this.width, this.height); // Draw the component
+
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+
+        } else if (this.type == "car") {
+            
+            ctx.fillStyle = color;
             carP1.style.fill = color;
             // carP1 = "data:image/svg+xml;charset=utf-8," + carP1.replace(/#e04236/g,color);
-            ctx.drawImage(carP1,this.x,this.y,SIZE_CAR,SIZE_CAR); // Draw the component
+            ctx.drawImage(carP1,this.x,this.y,this.width,this.height);
+
+        } else if (this.type == "road") {
+
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        } else if (this.type == "text finish line") {
+
+            ctx.save();
+            ctx.font = this.width + " " + this.height;
+            ctx.translate(this.x,this.y);
+            ctx.rotate(-0.5*-Math.PI);
+
+            ctx.fillStyle = color;
+            ctx.fillText(FINISH_STRING.split('').join(' '), 0, 0);
+            ctx.restore();
         }
     }
 
@@ -120,6 +167,7 @@ function component(width, height, color, x, y, type) {
         this.hitEnd();
     }
 
+    // Finish line
     this.hitEnd = function() {
 
         if (this.x > myGameArea.canvas.width) {
@@ -147,6 +195,9 @@ function updateGameArea() {
 
     myGameArea.clear();
     myGameArea.frameNo += 1;
+
+    // Update the road
+    MAP.forEach(road => road.update());
     
     // Change text
     scoreP1.text="SCORE P1: " + scoreP1Variable;

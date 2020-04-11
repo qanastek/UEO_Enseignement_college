@@ -6,9 +6,7 @@ $(document).keypress(function(e){
 
     if (e.which == P1_KEY) {
         move(myGamePieceP1);
-    } else {
+    } else if (e.which == P2_KEY) {
         move(myGamePieceP2);
     }
 });
-
-// fill: yellow;
