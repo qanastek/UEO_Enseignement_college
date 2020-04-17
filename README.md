@@ -2,17 +2,25 @@
 
 ![Preview](preview.png)
 
-# Techonoly used:
+# Stackblitz
 
-* JavaScript ES6
-* JQuery
-* HTML
-* CSS
+URL: 
 
-# Autors:
+# Project tree
+
+- 
+
+# Autors
 
 * Capdepon Quentin
 * Labrak Yanis
 * Maxime Tellene
 * Sassi Nader
 * Vougeot Valentin
+
+# Techonoly used
+
+* JavaScript ES6
+* JQuery
+* HTML
+* CSS
